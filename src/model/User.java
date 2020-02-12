@@ -4,7 +4,12 @@ public class User {
 
 	public static final String[] DOCUMENTTYPE = {"Cedula de ciudadania","Tarjeta de identidad", "Registro civil", "Pasaporte", "Cedula de extranjeria"};
 	
-	private String documentType, id, name, lastName, pNumber,address;
+	private String documentType; 
+	private String id;
+	private String name;
+	private String lastName;
+	private String pNumber;
+	private String address;
 
 	/**
 	 * @param documentType
@@ -15,11 +20,17 @@ public class User {
 	 * @param address
 	 */
 	public User(String documentType, String id, String name, String lastName, String pNumber, String address) {
-		super();
+		
 		this.documentType = documentType;
 		this.id = id;
 		this.name = name;
 		this.lastName = lastName;
+		
+		if(pNumber.equals(null)) {
+			this.pNumber = "No registra";
+			
+		}
+		
 		this.pNumber = pNumber;
 		this.address = address;
 	}
