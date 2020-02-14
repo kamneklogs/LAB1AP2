@@ -19,9 +19,9 @@ public class User {
 	 * @param pNumber
 	 * @param address
 	 */
-	public User(String documentType, String id, String name, String lastName, String pNumber, String address) {
+	public User(int documentType, String id, String name, String lastName, String pNumber, String address) {
 		
-		this.documentType = documentType;
+		this.documentType = DOCUMENTTYPE[documentType];
 		this.id = id;
 		this.name = name;
 		this.lastName = lastName;
@@ -81,6 +81,17 @@ public class User {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	
+	
+	public static String msgTypeDoc() {
+		String s = "";
+		
+		for (int i = 0; i < DOCUMENTTYPE.length; i++) {
+			s+= (i+1) + ". " + DOCUMENTTYPE[i] + "\n";
+		}
+		
+		return s;
 	}
 	
 
