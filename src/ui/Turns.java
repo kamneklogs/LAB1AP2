@@ -35,8 +35,9 @@ public class Turns {
 				System.out.println("Ingrese el primera apellido");
 				lastName = r.nextLine();
 				System.out.println("Ingrese numero de telefono (Opcional: Ingresar NA:)");
-				last
+				address = r.nextLine();
 				System.out.println("Ingrese numero de telefono (Opcional: Ingresar NA:)");
+				
 				break;
 				
 				
