@@ -29,9 +29,14 @@ public class Turns {
 				System.out.println(User.msgTypeDoc());
 				documentTypeOpt = r.nextInt();
 				System.out.println("Ingrese el numero de documento: ");
+				id = r.nextLine();
 				System.out.println("Ingrese el primer nombre:");
+				name = r.nextLine();
 				System.out.println("Ingrese el primera apellido");
-
+				lastName = r.nextLine();
+				System.out.println("Ingrese numero de telefono (Opcional: Ingresar NA:)");
+				last
+				System.out.println("Ingrese numero de telefono (Opcional: Ingresar NA:)");
 				break;
 				
 				
