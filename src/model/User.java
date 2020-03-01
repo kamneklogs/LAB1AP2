@@ -1,10 +1,11 @@
 package model;
 
-public class User{
+public class User {
 
-	public static final String[] DOCUMENTTYPE = {"Cedula de ciudadania","Tarjeta de identidad", "Registro civil", "Pasaporte", "Cedula de extranjeria"};
-	
-	private String documentType; 
+	public static final String[] DOCUMENTTYPE = { "Cedula de ciudadania", "Tarjeta de identidad", "Registro civil",
+			"Pasaporte", "Cedula de extranjeria" };
+
+	private String documentType;
 	private int id;
 	private String name;
 	private String lastName;
@@ -20,22 +21,22 @@ public class User{
 	 * @param address
 	 */
 	public User(int documentType, int id, String name, String lastName, String pNumber, String address) {
-		
-		this.documentType = DOCUMENTTYPE[documentType-1];
+
+		this.documentType = DOCUMENTTYPE[documentType - 1];
 		this.id = id;
 		this.name = name;
 		this.lastName = lastName;
-		
-		if(pNumber.equals("")) {
+
+		if (pNumber.equals("")) {
 			this.pNumber = "No registra";
-			
+
 		}
-		
-		if(pNumber.equals("")) {
+
+		if (pNumber.equals("")) {
 			this.pNumber = "No registra";
-			
+
 		}
-		
+
 		this.pNumber = pNumber;
 		this.address = address;
 	}
@@ -87,15 +88,14 @@ public class User{
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
-	
+
 	public static String msgTypeDoc() {
 		String s = "";
-		
+
 		for (int i = 0; i < DOCUMENTTYPE.length; i++) {
-			s+= (i+1) + ". " + DOCUMENTTYPE[i] + "\n";
+			s += (i + 1) + ". " + DOCUMENTTYPE[i] + "\n";
 		}
-		
+
 		return s;
 	}
 
@@ -103,9 +103,9 @@ public class User{
 	public String toString() {
 		return "User [documentType=" + documentType + ", id=" + id + ", name=" + name + "]";
 	}
-	
 
-	
-	
-	
+	public String getCompleteName() {
+		return name + " " +lastName;
+	}
+
 }

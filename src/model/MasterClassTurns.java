@@ -12,7 +12,7 @@ public class MasterClassTurns {
 
 		dataBaseUsers = new ArrayList<User>();
 		turns = new ArrayList<Turn>();
-		
+
 	}
 
 	public ArrayList<Turn> getTurns() {
@@ -47,34 +47,106 @@ public class MasterClassTurns {
 
 	}
 
-	public int binarySearch(int id) {
+	public int searchUser(int id) throws UnregisteredUserException {
 
-		dataBaseUsers.sort(new sortById());
-		int numId = id;
+		int index = binarySearch(id);
 
-		int middle, down = 0, up = dataBaseUsers.size();
-
-		while (down <= up) {
-			middle = (up + down) / 2;
-			if (dataBaseUsers.get(middle).getId() == numId)
-				return middle;
-			else if (numId < dataBaseUsers.get(middle).getId())
-				up = middle - 1;
-			else
-				down = middle + 1;
+		if (index == -1) {
+			throw new UnregisteredUserException(id);
 		}
 
+		return index;
+
+	}
+
+	public String searchInTurns(int id) {
+
+		String respectiveTurn = "";
+		for (int i = 0; i < turns.size(); i++) {
+			if (turns.get(i).getIdUser() == id) {
+				respectiveTurn = turns.get(i).getNameT();
+				break;
+			}
+		}
+
+		return respectiveTurn;
+	}
+	
+	public boolean validTurn(int id) {
+		boolean b = false;
+			
+		for (int i = 0; i < turns.size(); i++) {
+			if(turns.get(i).getIdUser() == id) {
+				return true;
+			}
+		}
+		
+		return b;
+	}
+
+	public int binarySearch(int id) throws UnregisteredUserException {
+
+		if (dataBaseUsers.size() == 1) {
+			if (dataBaseUsers.get(0).getId() == id) {
+				return 0;
+			} else {
+				throw new UnregisteredUserException(id);
+			}
+		} else {
+			dataBaseUsers.sort(new sortById());
+			int numId = id;
+
+			int middle, down = 0, up = dataBaseUsers.size();
+
+			while (down <= up) {
+				middle = (up + down) / 2;
+				if (dataBaseUsers.get(middle).getId() == numId)
+					return middle;
+				else if (numId < dataBaseUsers.get(middle).getId())
+					up = middle - 1;
+				else
+					down = middle + 1;
+			}
+
+		}
 		return -1;
 
 	}
-	
-	public void generateTurn(int idUser) {
-		if(turns.isEmpty()) {
-			turns.add(new Turn("A00", idUser));
+
+	public boolean generateTurn(int idUser) throws UserWithTurnException {
+		
+		if(validTurn(idUser)) {
+			throw new UserWithTurnException(idUser);
 		}
 		
-		
-		
+		if (turns.isEmpty()) {
+			turns.add(new Turn("A00", idUser));
+			return true;
+		}
+
+		String t = generateNextTurn(turns.get(turns.size() - 1).getNameT());
+
+		turns.add(new Turn(t, idUser));
+
+		return true;
+
+	}
+
+	public String generateNextTurn(String actualTurn) {
+		String s = "";
+
+		int numberPart = Integer.parseInt(actualTurn.substring(1));
+		char letter = actualTurn.charAt(0);
+
+		if (numberPart != 99 && numberPart < 10) {
+			s = letter + "0" + Integer.toString(numberPart + 1);
+		} else if (numberPart != 99 && numberPart >= 10) {
+			s = letter + Integer.toString(numberPart + 1);
+		} else {
+			s = (char) (letter + 1) + "00";
+		}
+
+		return s;
 	}
 
 }

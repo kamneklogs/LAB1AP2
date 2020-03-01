@@ -3,20 +3,15 @@ package customExceptions;
 @SuppressWarnings("serial")
 public class UnregisteredUserException extends Exception {
 
-	private int documentNumber;
+	public UnregisteredUserException(int documentNumber) {
+		super("El numero de documento " + documentNumber
+				+ " no fue encontrado en  nuestra base de datos, intente nuevamente.");
+
+	}
 
 	public UnregisteredUserException(int documentNumber, String documentType) {
-		super("The document number " + documentNumber + " with document type " + documentType
-				+ " is not register in our base date, please do it.");
-		setDocumentNumber(documentNumber);
-	}
+		super(documentType + " con el numero " + documentNumber + " no fue encontrado en nuestra base de datos");
 
-	public int getDocumentNumber() {
-		return documentNumber;
-	}
-
-	public void setDocumentNumber(int documentNumber) {
-		this.documentNumber = documentNumber;
 	}
 
 }

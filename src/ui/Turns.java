@@ -4,6 +4,7 @@ package ui;
 import java.util.Scanner;
 
 import customExceptions.UnregisteredUserException;
+import customExceptions.UserWithTurnException;
 import model.MasterClassTurns;
 import model.User;
 
@@ -89,11 +90,19 @@ public class Turns {
 		System.out.println("Ingrese su numedo de identificacion: ");
 		id = r.nextInt();
 
+		
+		
 		try {
-			System.out.println(myMasterClass.searchUser(documentType, id));
+			myMasterClass.generateTurn(id);
+			System.out.println("Turno: " + myMasterClass.searchInTurns(id) + " asignado al usuario "
+					+ myMasterClass.getDataBaseUsers().get(myMasterClass.binarySearch(id)).getCompleteName());
 		} catch (UnregisteredUserException e) {
 			System.out.println(e);
+		} catch (UserWithTurnException e) {
+			System.out.println(e);
 		}
+
+		
 
 	}
 
