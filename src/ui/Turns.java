@@ -129,6 +129,9 @@ public class Turns {
 			}
 
 		} while (opt != 4);
+		
+		
+		System.out.println("Gracias por usar TurnsApp Deluxe V1.0");
 
 	}
 
