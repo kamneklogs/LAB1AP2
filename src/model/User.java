@@ -1,11 +1,11 @@
 package model;
 
-public class User {
+public class User{
 
 	public static final String[] DOCUMENTTYPE = {"Cedula de ciudadania","Tarjeta de identidad", "Registro civil", "Pasaporte", "Cedula de extranjeria"};
 	
 	private String documentType; 
-	private String id;
+	private int id;
 	private String name;
 	private String lastName;
 	private String pNumber;
@@ -19,14 +19,19 @@ public class User {
 	 * @param pNumber
 	 * @param address
 	 */
-	public User(int documentType, String id, String name, String lastName, String pNumber, String address) {
+	public User(int documentType, int id, String name, String lastName, String pNumber, String address) {
 		
-		this.documentType = DOCUMENTTYPE[documentType];
+		this.documentType = DOCUMENTTYPE[documentType-1];
 		this.id = id;
 		this.name = name;
 		this.lastName = lastName;
 		
-		if(pNumber.equals(null)) {
+		if(pNumber.equals("")) {
+			this.pNumber = "No registra";
+			
+		}
+		
+		if(pNumber.equals("")) {
 			this.pNumber = "No registra";
 			
 		}
@@ -43,11 +48,11 @@ public class User {
 		this.documentType = documentType;
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -92,6 +97,11 @@ public class User {
 		}
 		
 		return s;
+	}
+
+	@Override
+	public String toString() {
+		return "User [documentType=" + documentType + ", id=" + id + ", name=" + name + "]";
 	}
 	
 
