@@ -7,6 +7,7 @@ public class MasterClassTurns {
 
 	private ArrayList<User> dataBaseUsers;
 	private ArrayList<Turn> turns;
+	private Turn actualT;
 
 	public MasterClassTurns() {
 
@@ -71,16 +72,16 @@ public class MasterClassTurns {
 
 		return respectiveTurn;
 	}
-	
+
 	public boolean validTurn(int id) {
 		boolean b = false;
-			
+
 		for (int i = 0; i < turns.size(); i++) {
-			if(turns.get(i).getIdUser() == id) {
+			if (turns.get(i).getIdUser() == id) {
 				return true;
 			}
 		}
-		
+
 		return b;
 	}
 
@@ -114,13 +115,14 @@ public class MasterClassTurns {
 	}
 
 	public boolean generateTurn(int idUser) throws UserWithTurnException {
-		
-		if(validTurn(idUser)) {
+
+		if (validTurn(idUser)) {
 			throw new UserWithTurnException(idUser);
 		}
-		
+
 		if (turns.isEmpty()) {
 			turns.add(new Turn("A00", idUser));
+			actualT = turns.get(0);
 			return true;
 		}
 
@@ -147,6 +149,38 @@ public class MasterClassTurns {
 		}
 
 		return s;
+	}
+
+	public int searchActualT(String namePreTurn) {
+		int index = -1;
+		for (int i = 0; i < turns.size(); i++) {
+			if (turns.get(i).getNameT().equals(namePreTurn)) {
+				index = i ;
+				break;
+			}
+		}
+		return index;
+	}
+
+	public String showActualTurn() throws UnregisteredUserException, TurnGenerationException {
+		String a = "El turno actual es ";
+
+		if (actualT.getNameT().equals("A00")) {
+			a += actualT.getNameT() + " y le corresponde a "
+					+ dataBaseUsers.get(binarySearch(actualT.getIdUser())).getCompleteName();
+			actualT = turns.get(searchActualT(actualT.getNameT()));
+		} else {
+			if (searchActualT(actualT.getNameT()) == -1) {
+				throw new TurnGenerationException();
+			} else {
+				
+				actualT = turns.get(searchActualT(actualT.getNameT()));
+			}
+			a = actualT.getNameT() + " y le corresponde a "
+					+ dataBaseUsers.get(binarySearch(actualT.getIdUser())).getCompleteName();
+		}
+		actualT = turns.get(searchActualT(actualT.getNameT()));
+		return a;
 	}
 
 }

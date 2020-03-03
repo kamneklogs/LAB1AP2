@@ -11,6 +11,7 @@ public class User {
 	private String lastName;
 	private String pNumber;
 	private String address;
+	
 
 	/**
 	 * @param documentType
@@ -105,7 +106,7 @@ public class User {
 	}
 
 	public String getCompleteName() {
-		return name + " " +lastName;
+		return name + " " + lastName;
 	}
 
 }

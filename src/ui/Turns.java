@@ -3,6 +3,7 @@ package ui;
 
 import java.util.Scanner;
 
+import customExceptions.TurnGenerationException;
 import customExceptions.UnregisteredUserException;
 import customExceptions.UserWithTurnException;
 import model.MasterClassTurns;
@@ -48,53 +49,18 @@ public class Turns {
 	}
 
 	public void addTurn() {
-		int documentTypeOpt = 0, id;
-		String documentType = "";
+		int id;
 
 		System.out.println("Elija su tipo de documento: \n" + User.msgTypeDoc());
 
-		boolean correct = true;
+		r.nextInt();
 
-		documentTypeOpt = r.nextInt();
-
-		do {
-			switch (documentTypeOpt) {
-			case 1:
-				documentType = User.DOCUMENTTYPE[0];
-				break;
-
-			case 2:
-				documentType = User.DOCUMENTTYPE[1];
-				break;
-
-			case 3:
-				documentType = User.DOCUMENTTYPE[2];
-				break;
-
-			case 4:
-				documentType = User.DOCUMENTTYPE[3];
-				break;
-
-			case 5:
-				documentType = User.DOCUMENTTYPE[4];
-				break;
-
-			default:
-				System.out.println("Opcion Invalida, vuelva a escoger:\n");
-				correct = false;
-
-			}
-
-		} while (correct == false);
-
-		System.out.println("Ingrese su numedo de identificacion: ");
+		System.out.println("Ingrese su numero de identificacion: ");
 		id = r.nextInt();
 
-		
-		
 		try {
 			myMasterClass.generateTurn(id);
-			System.out.println("Turno: " + myMasterClass.searchInTurns(id) + " asignado al usuario "
+			System.out.println("\n\nTurno: " + myMasterClass.searchInTurns(id) + " asignado al usuario "
 					+ myMasterClass.getDataBaseUsers().get(myMasterClass.binarySearch(id)).getCompleteName());
 		} catch (UnregisteredUserException e) {
 			System.out.println(e);
@@ -102,7 +68,35 @@ public class Turns {
 			System.out.println(e);
 		}
 
-		
+	}
+
+	public void takeActualTurn() {
+
+		boolean b = false;
+
+		do {
+
+			try {
+				System.out.println(myMasterClass.showActualTurn());
+
+				System.out.println("1. Turno atendido.\n2. Usuario no se encuentra presente");
+				opt = r.nextInt();
+
+				System.out.println("Atender al turno siguiente?\n 1. Si.\n 2. No, volver al menu principal.\n");
+				opt = r.nextInt();
+				if (opt == 1) {
+					b = true;
+				} else {
+					b = false;
+				}
+			} catch (UnregisteredUserException e) {
+				System.out.println(e);
+			} catch (TurnGenerationException e) {
+				System.out.println(e);
+				e.printStackTrace();
+			}
+
+		} while (b);
 
 	}
 
@@ -112,26 +106,32 @@ public class Turns {
 
 		do {
 			System.out.println(
-					"\tGESTION DE TURNOS\t\nEscoja la opcion que desee realizar:\n\n1. Agregar usuario.\n2. Registrar turno.\n3. Atender turno.\n4. salir.\n ");
+					"\n\tGESTION DE TURNOS\t\nEscoja la opcion que desee realizar:\n\n1. Agregar usuario.\n2. Registrar turno.\n3. Atender turno.\n4. salir.\n ");
 			opt = r.nextInt();
 
 			switch (opt) {
-			case 1:
-				app.addUser();
-				break;
+				case 1:
+					app.addUser();
+					break;
 
-			case 2:
-				app.addTurn();
-				break;
+				case 2:
+					app.addTurn();
+					break;
 
-			default:
-				break;
+				case 3:
+					app.takeActualTurn();
+					break;
+
+				case 4:
+					System.out.println("\nGracias por usar TurnsApp Deluxe V1.0");
+					break;
+
+				default:
+					System.out.println("Opcion invalida, vuelva a intentarlo\n");
+					break;
 			}
 
 		} while (opt != 4);
-		
-		
-		System.out.println("Gracias por usar TurnsApp Deluxe V1.0");
 
 	}
 
